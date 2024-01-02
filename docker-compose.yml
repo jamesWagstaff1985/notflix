@@ -1,0 +1,23 @@
+# Use root/example as user/password credentials
+version: '3.8'
+
+services:
+
+  mongodb:
+    image: mongo:6-jammy # <- use for modern os
+    #image: mongo:4.4.18-focal <- use for le potato!!
+    restart: always
+    ports:
+      - '27017:27017'
+  notflix:
+    image: jameswagstaff/notflix
+    restart: always
+    ports:
+      - '80:80'
+    volumes:
+      - G:/media:/media
+    environment:
+      SPRING_APPLICATION_JSON: '{
+        "spring.data.mongodb.uri": "mongodb://mongodb:27017/dbtest"
+      }'
+
